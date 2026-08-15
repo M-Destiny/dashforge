@@ -1,0 +1,16 @@
+app = "dashforge"
+primary_region = "iad"
+
+[build]
+  builder = "heroku/buildpacks:20"
+
+[[services]]
+  internal_port = 5173
+  protocol = "http"
+  [[services.ports]]
+    port = 80
+
+[[services.health_checks]]
+  grace_period = "10s"
+  interval = "15s"
+  restart_limit = 3

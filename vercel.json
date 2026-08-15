@@ -1,0 +1,5 @@
+{
+  "name": "dashforge",
+  "builds": [{ "src": "src/**/*", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "index.html" }]
+}
