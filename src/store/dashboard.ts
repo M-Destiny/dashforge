@@ -13,7 +13,9 @@ interface DashboardState {
   setMetrics: (metrics: Metric[]) => void;
   addUser: (user: User) => void;
   updateUser: (id: string, data: Partial<User>) => void;
+  addNotification: (notification: Omit<Notification, 'id' | 'createdAt'>) => void;
   markNotificationRead: (id: string) => void;
+  clearNotifications: () => void;
 }
 
 const mockMetrics: Metric[] = [
@@ -24,9 +26,15 @@ const mockMetrics: Metric[] = [
 ];
 
 const mockUsers: User[] = [
-  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', role: 'admin', status: 'active', joinedAt: '2024-01-15', lastActive: '2024-02-20' },
-  { id: '2', name: 'Bob Smith', email: 'bob@example.com', role: 'editor', status: 'active', joinedAt: '2024-01-20', lastActive: '2024-02-19' },
-  { id: '3', name: 'Carol Davis', email: 'carol@example.com', role: 'viewer', status: 'inactive', joinedAt: '2024-02-01', lastActive: '2024-02-10' },
+  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', role: 'admin', status: 'active', joinedAt: '2024-01-15', lastActive: '2024-02-20', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice' },
+  { id: '2', name: 'Bob Smith', email: 'bob@example.com', role: 'editor', status: 'active', joinedAt: '2024-01-20', lastActive: '2024-02-19', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob' },
+  { id: '3', name: 'Carol Davis', email: 'carol@example.com', role: 'viewer', status: 'inactive', joinedAt: '2024-02-01', lastActive: '2024-02-10', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carol' },
+];
+
+const mockNotifications: Notification[] = [
+  { id: '1', message: 'New user Alice Johnson signed up', type: 'info', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString() },
+  { id: '2', message: 'Revenue increased by 12.5% this week', type: 'success', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString() },
+  { id: '3', message: 'Server maintenance scheduled for tonight', type: 'warning', read: true, createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
 ];
 
 export const useDashboardStore = create<DashboardState>()(
@@ -36,7 +44,7 @@ export const useDashboardStore = create<DashboardState>()(
       theme: 'light',
       metrics: mockMetrics,
       users: mockUsers,
-      notifications: [],
+      notifications: mockNotifications,
       toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
       toggleTheme: () => set((s) => ({ theme: s.theme === 'light' ? 'dark' : 'light' })),
       setMetrics: (metrics) => set({ metrics }),
@@ -44,9 +52,17 @@ export const useDashboardStore = create<DashboardState>()(
       updateUser: (id, data) => set((s) => ({
         users: s.users.map((u) => u.id === id ? { ...u, ...data } : u),
       })),
+      addNotification: (notification) => set((s) => ({
+        notifications: [{
+          ...notification,
+          id: crypto.randomUUID(),
+          createdAt: new Date().toISOString(),
+        }, ...s.notifications].slice(0, 50),
+      })),
       markNotificationRead: (id) => set((s) => ({
         notifications: s.notifications.map((n) => n.id === id ? { ...n, read: true } : n),
       })),
+      clearNotifications: () => set({ notifications: [] }),
     }),
     {
       name: 'dashforge-storage',

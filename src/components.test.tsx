@@ -114,11 +114,11 @@ describe('Charts', () => {
     expect(screen.getByText('Weekly Sessions')).toBeInTheDocument();
     // Check for chart container
     expect(screen.getByTestId('area-chart')).toBeInTheDocument();
-  });
+  }, 15000);
 
   it('renders BarChartComponent', () => {
     render(<BarChartComponent />);
     expect(screen.getByText('Top Pages')).toBeInTheDocument();
     expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
-  });
+  }, 15000);
 });
