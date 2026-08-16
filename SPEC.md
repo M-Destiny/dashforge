@@ -76,5 +76,5 @@ DashForge is a modern admin dashboard built with React and TailwindCSS. Displays
 ## 5. Milestones
 
 - [x] Phase 1-2: Setup + core (this build)
-- [ ] Phase 3-4: Components + pages
-- [ ] Phase 5: Deployment configs
+- [x] Phase 3-4: Components + pages
+- [x] Phase 5: Deployment configs
