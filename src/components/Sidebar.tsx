@@ -20,7 +20,11 @@ export default function Sidebar() {
     >
       <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">
         {!sidebarCollapsed && <span className="font-bold text-xl text-blue-600">DashForge</span>}
-        <button onClick={toggleSidebar} className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+        <button
+          onClick={toggleSidebar}
+          className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+          aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
           {sidebarCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </button>
       </div>
