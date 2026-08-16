@@ -4,7 +4,9 @@ import App from '@/App';
 import { useDashboardStore } from '@/store/dashboard';
 import '@testing-library/jest-dom';
 
-vi.mock('@/store/dashboard');
+vi.mock('@/store/dashboard', () => ({
+  useDashboardStore: vi.fn(),
+}));
 
 const renderApp = () => render(<App />);
 
@@ -15,7 +17,7 @@ describe('App', () => {
   });
 
   it('renders dashboard by default', () => {
-    (useDashboardStore as any).mockImplementation(() => ({
+    vi.mocked(useDashboardStore).mockImplementation(() => ({
       sidebarCollapsed: false,
       theme: 'light',
       metrics: [
@@ -44,7 +46,7 @@ describe('App', () => {
 
   it('toggles sidebar', () => {
     const mockToggleSidebar = vi.fn();
-    (useDashboardStore as any).mockImplementation(() => ({
+    vi.mocked(useDashboardStore).mockImplementation(() => ({
       sidebarCollapsed: false,
       theme: 'light',
       metrics: [],
@@ -66,7 +68,7 @@ describe('App', () => {
 
   it('toggles theme', () => {
     const mockToggleTheme = vi.fn();
-    (useDashboardStore as any).mockImplementation(() => ({
+    vi.mocked(useDashboardStore).mockImplementation(() => ({
       sidebarCollapsed: false,
       theme: 'light',
       metrics: [],

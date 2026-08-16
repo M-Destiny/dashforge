@@ -85,7 +85,7 @@ describe('Dashboard Store', () => {
       toggleSidebar();
     });
     const store = localStorageMock._getStore();
-    const stored = JSON.parse(store['dashforge-storage']);
+    const stored = JSON.parse(store['dashforge-storage'] as string);
     expect(stored.state.sidebarCollapsed).toBe(true);
   });
 
@@ -95,7 +95,7 @@ describe('Dashboard Store', () => {
       toggleTheme();
     });
     const store = localStorageMock._getStore();
-    const stored = JSON.parse(store['dashforge-storage']);
+    const stored = JSON.parse(store['dashforge-storage'] as string);
     expect(stored.state.theme).toBe('dark');
   });
 });
