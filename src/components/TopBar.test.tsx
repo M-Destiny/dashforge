@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { BrowserRouter } from 'react-router-dom';
 import TopBar from '@/components/TopBar';
 import { useDashboardStore } from '@/store/dashboard';
 import '@testing-library/jest-dom';
@@ -7,6 +8,10 @@ import '@testing-library/jest-dom';
 vi.mock('@/store/dashboard', () => ({
   useDashboardStore: vi.fn(),
 }));
+
+const renderWithRouter = (component: React.ReactNode) => {
+  return render(<BrowserRouter>{component}</BrowserRouter>);
+};
 
 const mockNotifications = [
   { id: '1', message: 'Test notification 1', type: 'info' as const, read: false, createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString() },
@@ -28,7 +33,7 @@ describe('TopBar', () => {
       markNotificationRead: vi.fn(),
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     expect(screen.getByText('DashForge')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /notifications/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /settings/i })).toBeInTheDocument();
@@ -42,7 +47,7 @@ describe('TopBar', () => {
       markNotificationRead: vi.fn(),
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     const bellButton = screen.getByRole('button', { name: /notifications, 2 unread/i });
     expect(bellButton).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
@@ -57,7 +62,7 @@ describe('TopBar', () => {
       markNotificationRead: mockMarkRead,
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     fireEvent.click(screen.getByRole('button', { name: /notifications, 2 unread/i }));
 
     expect(screen.getByText('Notifications')).toBeInTheDocument();
@@ -76,7 +81,7 @@ describe('TopBar', () => {
       markNotificationRead: mockMarkRead,
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     fireEvent.click(screen.getByRole('button', { name: /notifications, 2 unread/i }));
     fireEvent.click(screen.getByText('Test notification 1'));
 
@@ -92,7 +97,7 @@ describe('TopBar', () => {
       markNotificationRead: mockMarkRead,
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     fireEvent.click(screen.getByRole('button', { name: /notifications, 2 unread/i }));
     fireEvent.click(screen.getByText('Mark all read'));
 
@@ -109,7 +114,7 @@ describe('TopBar', () => {
       markNotificationRead: vi.fn(),
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     fireEvent.click(screen.getByRole('button', { name: /notifications/i }));
     expect(screen.getByText('No notifications yet')).toBeInTheDocument();
   });
@@ -123,7 +128,7 @@ describe('TopBar', () => {
       markNotificationRead: vi.fn(),
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     fireEvent.click(screen.getByRole('button', { name: /settings/i }));
     fireEvent.click(screen.getByText('Switch to Dark Mode'));
 
@@ -138,7 +143,7 @@ describe('TopBar', () => {
       markNotificationRead: vi.fn(),
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     const settingsButton = screen.getByRole('button', { name: /settings/i });
     expect(settingsButton.querySelector('svg')).toBeInTheDocument();
   });
@@ -151,7 +156,7 @@ describe('TopBar', () => {
       markNotificationRead: vi.fn(),
     }));
 
-    render(<TopBar />);
+    renderWithRouter(<TopBar />);
     fireEvent.click(screen.getByRole('button', { name: /notifications, 2 unread/i }));
     expect(screen.getByText('Notifications')).toBeInTheDocument();
 

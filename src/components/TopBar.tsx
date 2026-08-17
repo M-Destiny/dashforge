@@ -1,9 +1,18 @@
 import { useDashboardStore } from '../store/dashboard';
-import { Bell, Moon, Sun } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Bell, Moon, Sun, ChevronRight } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+
+const routeLabels: Record<string, string> = {
+  '/dashboard': 'Dashboard',
+  '/users': 'Users',
+  '/reports': 'Reports',
+  '/settings': 'Settings',
+};
 
 export default function TopBar() {
   const { theme, toggleTheme, notifications, markNotificationRead } = useDashboardStore();
+  const location = useLocation();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -21,10 +30,34 @@ export default function TopBar() {
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
+  // Build breadcrumb segments
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const breadcrumbs = pathSegments.map((segment, index) => {
+    const path = '/' + pathSegments.slice(0, index + 1).join('/');
+    return { label: routeLabels[path] || segment, path };
+  });
+
   return (
     <header className="h-16 px-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
       <div className="flex items-center gap-4">
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">DashForge</h1>
+        {/* Breadcrumbs */}
+        {breadcrumbs.length > 0 && (
+          <nav className="flex items-center gap-1.5 text-sm" aria-label="Breadcrumb">
+            {breadcrumbs.map((crumb, idx) => (
+              <span key={crumb.path} className="flex items-center gap-1.5">
+                {idx > 0 && <ChevronRight size={14} className="text-gray-400 dark:text-gray-500" />}
+                {idx === breadcrumbs.length - 1 ? (
+                  <span className="text-gray-900 dark:text-gray-100 font-medium">{crumb.label}</span>
+                ) : (
+                  <a href={crumb.path} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+                    {crumb.label}
+                  </a>
+                )}
+              </span>
+            ))}
+          </nav>
+        )}
       </div>
       <div className="flex items-center gap-3" ref={dropdownRef}>
         <div className="relative">
