@@ -19,22 +19,83 @@ interface DashboardState {
 }
 
 const mockMetrics: Metric[] = [
-  { id: '1', label: 'Revenue', value: 84200, unit: '$', trend: 'up', trendValue: 12.5, color: 'blue' },
+  {
+    id: '1',
+    label: 'Revenue',
+    value: 84200,
+    unit: '$',
+    trend: 'up',
+    trendValue: 12.5,
+    color: 'blue',
+  },
   { id: '2', label: 'Users', value: 12847, trend: 'up', trendValue: 8.2, color: 'green' },
   { id: '3', label: 'Sessions', value: 94210, trend: 'down', trendValue: 3.1, color: 'purple' },
-  { id: '4', label: 'Bounce Rate', value: 24.3, unit: '%', trend: 'down', trendValue: 5.4, color: 'orange' },
+  {
+    id: '4',
+    label: 'Bounce Rate',
+    value: 24.3,
+    unit: '%',
+    trend: 'down',
+    trendValue: 5.4,
+    color: 'orange',
+  },
 ];
 
 const mockUsers: User[] = [
-  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', role: 'admin', status: 'active', joinedAt: '2024-01-15', lastActive: '2024-02-20', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice' },
-  { id: '2', name: 'Bob Smith', email: 'bob@example.com', role: 'editor', status: 'active', joinedAt: '2024-01-20', lastActive: '2024-02-19', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob' },
-  { id: '3', name: 'Carol Davis', email: 'carol@example.com', role: 'viewer', status: 'inactive', joinedAt: '2024-02-01', lastActive: '2024-02-10', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carol' },
+  {
+    id: '1',
+    name: 'Alice Johnson',
+    email: 'alice@example.com',
+    role: 'admin',
+    status: 'active',
+    joinedAt: '2024-01-15',
+    lastActive: '2024-02-20',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice',
+  },
+  {
+    id: '2',
+    name: 'Bob Smith',
+    email: 'bob@example.com',
+    role: 'editor',
+    status: 'active',
+    joinedAt: '2024-01-20',
+    lastActive: '2024-02-19',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob',
+  },
+  {
+    id: '3',
+    name: 'Carol Davis',
+    email: 'carol@example.com',
+    role: 'viewer',
+    status: 'inactive',
+    joinedAt: '2024-02-01',
+    lastActive: '2024-02-10',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carol',
+  },
 ];
 
 const mockNotifications: Notification[] = [
-  { id: '1', message: 'New user Alice Johnson signed up', type: 'info', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString() },
-  { id: '2', message: 'Revenue increased by 12.5% this week', type: 'success', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString() },
-  { id: '3', message: 'Server maintenance scheduled for tonight', type: 'warning', read: true, createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
+  {
+    id: '1',
+    message: 'New user Alice Johnson signed up',
+    type: 'info',
+    read: false,
+    createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+  },
+  {
+    id: '2',
+    message: 'Revenue increased by 12.5% this week',
+    type: 'success',
+    read: false,
+    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: '3',
+    message: 'Server maintenance scheduled for tonight',
+    type: 'warning',
+    read: true,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+  },
 ];
 
 export const useDashboardStore = create<DashboardState>()(
@@ -49,19 +110,25 @@ export const useDashboardStore = create<DashboardState>()(
       toggleTheme: () => set((s) => ({ theme: s.theme === 'light' ? 'dark' : 'light' })),
       setMetrics: (metrics) => set({ metrics }),
       addUser: (user) => set((s) => ({ users: [...s.users, user] })),
-      updateUser: (id, data) => set((s) => ({
-        users: s.users.map((u) => u.id === id ? { ...u, ...data } : u),
-      })),
-      addNotification: (notification) => set((s) => ({
-        notifications: [{
-          ...notification,
-          id: crypto.randomUUID(),
-          createdAt: new Date().toISOString(),
-        }, ...s.notifications].slice(0, 50),
-      })),
-      markNotificationRead: (id) => set((s) => ({
-        notifications: s.notifications.map((n) => n.id === id ? { ...n, read: true } : n),
-      })),
+      updateUser: (id, data) =>
+        set((s) => ({
+          users: s.users.map((u) => (u.id === id ? { ...u, ...data } : u)),
+        })),
+      addNotification: (notification) =>
+        set((s) => ({
+          notifications: [
+            {
+              ...notification,
+              id: crypto.randomUUID(),
+              createdAt: new Date().toISOString(),
+            },
+            ...s.notifications,
+          ].slice(0, 50),
+        })),
+      markNotificationRead: (id) =>
+        set((s) => ({
+          notifications: s.notifications.map((n) => (n.id === id ? { ...n, read: true } : n)),
+        })),
       clearNotifications: () => set({ notifications: [] }),
     }),
     {

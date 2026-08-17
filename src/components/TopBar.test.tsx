@@ -14,9 +14,27 @@ const renderWithRouter = (component: React.ReactNode) => {
 };
 
 const mockNotifications = [
-  { id: '1', message: 'Test notification 1', type: 'info' as const, read: false, createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString() },
-  { id: '2', message: 'Test notification 2', type: 'success' as const, read: false, createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString() },
-  { id: '3', message: 'Test notification 3', type: 'warning' as const, read: true, createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
+  {
+    id: '1',
+    message: 'Test notification 1',
+    type: 'info' as const,
+    read: false,
+    createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+  },
+  {
+    id: '2',
+    message: 'Test notification 2',
+    type: 'success' as const,
+    read: false,
+    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+  },
+  {
+    id: '3',
+    message: 'Test notification 3',
+    type: 'warning' as const,
+    read: true,
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+  },
 ];
 
 describe('TopBar', () => {

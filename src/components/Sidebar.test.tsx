@@ -9,11 +9,12 @@ vi.mock('@/store/dashboard', () => ({
   useDashboardStore: vi.fn(),
 }));
 
-const renderSidebar = () => render(
-  <MemoryRouter initialEntries={['/dashboard']}>
-    <Sidebar />
-  </MemoryRouter>
-);
+const renderSidebar = () =>
+  render(
+    <MemoryRouter initialEntries={['/dashboard']}>
+      <Sidebar />
+    </MemoryRouter>
+  );
 
 describe('Sidebar', () => {
   beforeEach(() => {

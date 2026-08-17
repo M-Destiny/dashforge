@@ -4,10 +4,10 @@ import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import { lazy, Suspense } from 'react';
 
-const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.default })));
-const Users = lazy(() => import('./pages/Users').then(m => ({ default: m.default })));
-const Reports = lazy(() => import('./pages/Reports').then(m => ({ default: m.default })));
-const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.default })));
+const Dashboard = lazy(() => import('./pages/Dashboard').then((m) => ({ default: m.default })));
+const Users = lazy(() => import('./pages/Users').then((m) => ({ default: m.default })));
+const Reports = lazy(() => import('./pages/Reports').then((m) => ({ default: m.default })));
+const Settings = lazy(() => import('./pages/Settings').then((m) => ({ default: m.default })));
 
 function Loading() {
   return (
@@ -23,9 +23,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <div className={`${theme}`}>
-        <div className={`flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
+        <div
+          className={`flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+        >
           <Sidebar />
-          <div className={`flex-1 flex flex-col overflow-hidden ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
+          <div
+            className={`flex-1 flex flex-col overflow-hidden ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}
+          >
             <TopBar />
             <main className="flex-1 overflow-auto p-6">
               <Suspense fallback={<Loading />}>

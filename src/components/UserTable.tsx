@@ -1,6 +1,15 @@
 import { useState, useMemo } from 'react';
 import type { User } from '../types';
-import { Shield, User as UserIcon, Eye, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import {
+  Shield,
+  User as UserIcon,
+  Eye,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
 
 interface Props {
   users: User[];
@@ -15,11 +24,15 @@ export default function UserTable({ users, pageSize = 10 }: Props) {
 
   const filtered = useMemo(() => {
     return users
-      .filter((u) => u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase()))
+      .filter(
+        (u) =>
+          u.name.toLowerCase().includes(search.toLowerCase()) ||
+          u.email.toLowerCase().includes(search.toLowerCase())
+      )
       .sort((a, b) => {
         const av = a[sortField] ?? '';
         const bv = b[sortField] ?? '';
-        return sortDir === 'asc' ? (av < bv ? -1 : 1) : (av > bv ? -1 : 1);
+        return sortDir === 'asc' ? (av < bv ? -1 : 1) : av > bv ? -1 : 1;
       });
   }, [users, search, sortField, sortDir]);
 
@@ -28,7 +41,10 @@ export default function UserTable({ users, pageSize = 10 }: Props) {
 
   const toggleSort = (field: keyof User) => {
     if (sortField === field) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
-    else { setSortField(field); setSortDir('asc'); }
+    else {
+      setSortField(field);
+      setSortDir('asc');
+    }
   };
 
   const roleIcon = (role: User['role']) => {
@@ -48,7 +64,10 @@ export default function UserTable({ users, pageSize = 10 }: Props) {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
             placeholder="Search users..."
             className="w-full pl-9 pr-4 py-2 text-sm border rounded-lg bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700"
           />
@@ -58,8 +77,16 @@ export default function UserTable({ users, pageSize = 10 }: Props) {
         <thead className="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400">
           <tr>
             {(['name', 'email', 'role', 'status', 'lastActive'] as const).map((col) => (
-              <th key={col} className="text-left px-4 py-3 font-medium cursor-pointer" onClick={() => { toggleSort(col); setCurrentPage(1); }}>
-                {col.charAt(0).toUpperCase() + col.slice(1)} {sortField === col ? (sortDir === 'asc' ? '↑' : '↓') : ''}
+              <th
+                key={col}
+                className="text-left px-4 py-3 font-medium cursor-pointer"
+                onClick={() => {
+                  toggleSort(col);
+                  setCurrentPage(1);
+                }}
+              >
+                {col.charAt(0).toUpperCase() + col.slice(1)}{' '}
+                {sortField === col ? (sortDir === 'asc' ? '↑' : '↓') : ''}
               </th>
             ))}
           </tr>
@@ -69,20 +96,33 @@ export default function UserTable({ users, pageSize = 10 }: Props) {
             <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
               <td className="px-4 py-3 font-medium">
                 {user.avatar && (
-                  <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full mr-2 inline-block" />
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    className="w-8 h-8 rounded-full mr-2 inline-block"
+                  />
                 )}
                 {user.name}
               </td>
               <td className="px-4 py-3 text-gray-500">{user.email}</td>
               <td className="px-4 py-3">
-                <span className="inline-flex items-center gap-1.5 capitalize">{roleIcon(user.role)}{user.role}</span>
+                <span className="inline-flex items-center gap-1.5 capitalize">
+                  {roleIcon(user.role)}
+                  {user.role}
+                </span>
               </td>
               <td className="px-4 py-3">
-                <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
-                  user.status === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
-                  user.status === 'inactive' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                  'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                }`}>{user.status}</span>
+                <span
+                  className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                    user.status === 'active'
+                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                      : user.status === 'inactive'
+                        ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                        : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                  }`}
+                >
+                  {user.status}
+                </span>
               </td>
               <td className="px-4 py-3 text-gray-500">{user.lastActive}</td>
             </tr>
@@ -92,7 +132,8 @@ export default function UserTable({ users, pageSize = 10 }: Props) {
       {totalPages > 1 && (
         <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Showing {(currentPage - 1) * pageSize + 1} to {Math.min(currentPage * pageSize, filtered.length)} of {filtered.length} users
+            Showing {(currentPage - 1) * pageSize + 1} to{' '}
+            {Math.min(currentPage * pageSize, filtered.length)} of {filtered.length} users
           </p>
           <div className="flex items-center gap-2">
             <button

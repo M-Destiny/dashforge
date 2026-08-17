@@ -52,9 +52,33 @@ describe('MetricCard', () => {
 
 describe('UserTable', () => {
   const mockUsers = [
-    { id: '1', name: 'Alice Johnson', email: 'alice@example.com', role: 'admin' as const, status: 'active' as const, joinedAt: '2024-01-15', lastActive: '2024-02-20' },
-    { id: '2', name: 'Bob Smith', email: 'bob@example.com', role: 'editor' as const, status: 'inactive' as const, joinedAt: '2024-01-20', lastActive: '2024-02-19' },
-    { id: '3', name: 'Carol Davis', email: 'carol@example.com', role: 'viewer' as const, status: 'banned' as const, joinedAt: '2024-02-01', lastActive: '2024-02-10' },
+    {
+      id: '1',
+      name: 'Alice Johnson',
+      email: 'alice@example.com',
+      role: 'admin' as const,
+      status: 'active' as const,
+      joinedAt: '2024-01-15',
+      lastActive: '2024-02-20',
+    },
+    {
+      id: '2',
+      name: 'Bob Smith',
+      email: 'bob@example.com',
+      role: 'editor' as const,
+      status: 'inactive' as const,
+      joinedAt: '2024-01-20',
+      lastActive: '2024-02-19',
+    },
+    {
+      id: '3',
+      name: 'Carol Davis',
+      email: 'carol@example.com',
+      role: 'viewer' as const,
+      status: 'banned' as const,
+      joinedAt: '2024-02-01',
+      lastActive: '2024-02-10',
+    },
   ];
 
   beforeEach(() => {

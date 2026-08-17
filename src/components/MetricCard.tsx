@@ -33,11 +33,15 @@ export default function MetricCard({ metric }: Props) {
       <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">{metric.label}</p>
       <div className="flex items-end justify-between mt-2">
         <p className="text-3xl font-bold">
-          {metric.unit}{typeof metric.value === 'number' ? metric.value.toLocaleString() : metric.value}
+          {metric.unit}
+          {typeof metric.value === 'number' ? metric.value.toLocaleString() : metric.value}
         </p>
         <div className={`flex items-center gap-1 text-sm font-medium`}>
           <TrendIcon size={16} className={trendColor} />
-          <span className={trendColor} data-testid="metric-trend">{trendPrefix}{metric.trendValue}%</span>
+          <span className={trendColor} data-testid="metric-trend">
+            {trendPrefix}
+            {metric.trendValue}%
+          </span>
         </div>
       </div>
     </div>

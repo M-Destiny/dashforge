@@ -1,6 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { useDashboardStore } from '../store/dashboard';
-import { LayoutDashboard, Users, BarChart3, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Users,
+  BarChart3,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 
 const links = [
   { id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },

@@ -12,20 +12,88 @@ describe('Dashboard Store', () => {
       sidebarCollapsed: false,
       theme: 'light',
       metrics: [
-        { id: '1', label: 'Revenue', value: 84200, unit: '$', trend: 'up', trendValue: 12.5, color: 'blue' },
+        {
+          id: '1',
+          label: 'Revenue',
+          value: 84200,
+          unit: '$',
+          trend: 'up',
+          trendValue: 12.5,
+          color: 'blue',
+        },
         { id: '2', label: 'Users', value: 12847, trend: 'up', trendValue: 8.2, color: 'green' },
-        { id: '3', label: 'Sessions', value: 94210, trend: 'down', trendValue: 3.1, color: 'purple' },
-        { id: '4', label: 'Bounce Rate', value: 24.3, unit: '%', trend: 'down', trendValue: 5.4, color: 'orange' },
+        {
+          id: '3',
+          label: 'Sessions',
+          value: 94210,
+          trend: 'down',
+          trendValue: 3.1,
+          color: 'purple',
+        },
+        {
+          id: '4',
+          label: 'Bounce Rate',
+          value: 24.3,
+          unit: '%',
+          trend: 'down',
+          trendValue: 5.4,
+          color: 'orange',
+        },
       ],
       users: [
-        { id: '1', name: 'Alice Johnson', email: 'alice@example.com', role: 'admin', status: 'active', joinedAt: '2024-01-15', lastActive: '2024-02-20', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice' },
-        { id: '2', name: 'Bob Smith', email: 'bob@example.com', role: 'editor', status: 'active', joinedAt: '2024-01-20', lastActive: '2024-02-19', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob' },
-        { id: '3', name: 'Carol Davis', email: 'carol@example.com', role: 'viewer', status: 'inactive', joinedAt: '2024-02-01', lastActive: '2024-02-10', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carol' },
+        {
+          id: '1',
+          name: 'Alice Johnson',
+          email: 'alice@example.com',
+          role: 'admin',
+          status: 'active',
+          joinedAt: '2024-01-15',
+          lastActive: '2024-02-20',
+          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice',
+        },
+        {
+          id: '2',
+          name: 'Bob Smith',
+          email: 'bob@example.com',
+          role: 'editor',
+          status: 'active',
+          joinedAt: '2024-01-20',
+          lastActive: '2024-02-19',
+          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob',
+        },
+        {
+          id: '3',
+          name: 'Carol Davis',
+          email: 'carol@example.com',
+          role: 'viewer',
+          status: 'inactive',
+          joinedAt: '2024-02-01',
+          lastActive: '2024-02-10',
+          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carol',
+        },
       ],
       notifications: [
-        { id: '1', message: 'New user Alice Johnson signed up', type: 'info', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString() },
-        { id: '2', message: 'Revenue increased by 12.5% this week', type: 'success', read: false, createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString() },
-        { id: '3', message: 'Server maintenance scheduled for tonight', type: 'warning', read: true, createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
+        {
+          id: '1',
+          message: 'New user Alice Johnson signed up',
+          type: 'info',
+          read: false,
+          createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+        },
+        {
+          id: '2',
+          message: 'Revenue increased by 12.5% this week',
+          type: 'success',
+          read: false,
+          createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+        },
+        {
+          id: '3',
+          message: 'Server maintenance scheduled for tonight',
+          type: 'warning',
+          read: true,
+          createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+        },
       ],
     });
   });
@@ -71,7 +139,16 @@ describe('Dashboard Store', () => {
     const { addUser, users } = useDashboardStore.getState();
     const initialCount = users.length;
     act(() => {
-      addUser({ id: '4', name: 'Test User', email: 'test@example.com', role: 'viewer', status: 'active', joinedAt: '2024-03-01', lastActive: '2024-03-01', avatar: '' });
+      addUser({
+        id: '4',
+        name: 'Test User',
+        email: 'test@example.com',
+        role: 'viewer',
+        status: 'active',
+        joinedAt: '2024-03-01',
+        lastActive: '2024-03-01',
+        avatar: '',
+      });
     });
     expect(useDashboardStore.getState().users.length).toBe(initialCount + 1);
   });
@@ -96,12 +173,14 @@ describe('Dashboard Store', () => {
 
   it('marks notification as read', () => {
     const { markNotificationRead, notifications } = useDashboardStore.getState();
-    const unreadId = notifications.find(n => !n.read)?.id;
+    const unreadId = notifications.find((n) => !n.read)?.id;
     expect(unreadId).toBeDefined();
     act(() => {
       markNotificationRead(unreadId!);
     });
-    expect(useDashboardStore.getState().notifications.find(n => n.id === unreadId)?.read).toBe(true);
+    expect(useDashboardStore.getState().notifications.find((n) => n.id === unreadId)?.read).toBe(
+      true
+    );
   });
 
   it('clears all notifications', () => {

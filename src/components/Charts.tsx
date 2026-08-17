@@ -1,4 +1,14 @@
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from 'recharts';
 
 const areaData = [
   { date: 'Mon', value: 4200 },
@@ -29,7 +39,13 @@ export function AreaChartComponent() {
             <XAxis dataKey="date" fontSize={12} />
             <YAxis fontSize={12} />
             <Tooltip />
-            <Area type="monotone" dataKey="value" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.1} />
+            <Area
+              type="monotone"
+              dataKey="value"
+              stroke="#3b82f6"
+              fill="#3b82f6"
+              fillOpacity={0.1}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>

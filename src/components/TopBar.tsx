@@ -48,9 +48,14 @@ export default function TopBar() {
               <span key={crumb.path} className="flex items-center gap-1.5">
                 {idx > 0 && <ChevronRight size={14} className="text-gray-400 dark:text-gray-500" />}
                 {idx === breadcrumbs.length - 1 ? (
-                  <span className="text-gray-900 dark:text-gray-100 font-medium">{crumb.label}</span>
+                  <span className="text-gray-900 dark:text-gray-100 font-medium">
+                    {crumb.label}
+                  </span>
                 ) : (
-                  <a href={crumb.path} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+                  <a
+                    href={crumb.path}
+                    className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  >
                     {crumb.label}
                   </a>
                 )}
@@ -62,7 +67,10 @@ export default function TopBar() {
       <div className="flex items-center gap-3" ref={dropdownRef}>
         <div className="relative">
           <button
-            onClick={() => { setIsNotificationOpen(!isNotificationOpen); setIsSettingsOpen(false); }}
+            onClick={() => {
+              setIsNotificationOpen(!isNotificationOpen);
+              setIsSettingsOpen(false);
+            }}
             className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
           >
@@ -80,7 +88,9 @@ export default function TopBar() {
                 {notifications.some((n) => !n.read) && (
                   <button
                     onClick={() => {
-                      notifications.filter((n) => !n.read).forEach((n) => markNotificationRead(n.id));
+                      notifications
+                        .filter((n) => !n.read)
+                        .forEach((n) => markNotificationRead(n.id));
                     }}
                     className="text-xs text-blue-600 hover:underline"
                   >
@@ -105,14 +115,19 @@ export default function TopBar() {
                       <div className="flex items-start gap-3">
                         <div
                           className={`w-2 h-2 mt-2 rounded-full flex-shrink-0 ${
-                            notification.type === 'info' ? 'bg-blue-500' :
-                            notification.type === 'success' ? 'bg-green-500' :
-                            notification.type === 'warning' ? 'bg-yellow-500' :
-                            'bg-red-500'
+                            notification.type === 'info'
+                              ? 'bg-blue-500'
+                              : notification.type === 'success'
+                                ? 'bg-green-500'
+                                : notification.type === 'warning'
+                                  ? 'bg-yellow-500'
+                                  : 'bg-red-500'
                           }`}
                         />
                         <div className="flex-1 min-w-0">
-                          <p className={`text-sm ${!notification.read ? 'font-medium' : 'text-gray-500 dark:text-gray-400'}`}>
+                          <p
+                            className={`text-sm ${!notification.read ? 'font-medium' : 'text-gray-500 dark:text-gray-400'}`}
+                          >
                             {notification.message}
                           </p>
                           <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
@@ -133,16 +148,26 @@ export default function TopBar() {
 
         <div className="relative">
           <button
-            onClick={() => { setIsSettingsOpen(!isSettingsOpen); setIsNotificationOpen(false); }}
+            onClick={() => {
+              setIsSettingsOpen(!isSettingsOpen);
+              setIsNotificationOpen(false);
+            }}
             className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             aria-label="Settings"
           >
-            {theme === 'dark' ? <Sun size={20} className="text-gray-600 dark:text-gray-400" /> : <Moon size={20} className="text-gray-600 dark:text-gray-400" />}
+            {theme === 'dark' ? (
+              <Sun size={20} className="text-gray-600 dark:text-gray-400" />
+            ) : (
+              <Moon size={20} className="text-gray-600 dark:text-gray-400" />
+            )}
           </button>
           {isSettingsOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 z-50">
               <button
-                onClick={() => { toggleTheme(); setIsSettingsOpen(false); }}
+                onClick={() => {
+                  toggleTheme();
+                  setIsSettingsOpen(false);
+                }}
                 className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
               >
                 {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
