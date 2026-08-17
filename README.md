@@ -75,7 +75,7 @@ npm run preview
 - **Collapsible sidebar navigation** with React Router 6
 - **Code-split pages** via React.lazy + Suspense
 - **Persisted state** (sidebar, theme, users) via Zustand middleware
-- **Comprehensive test suite** — 10 tests covering store and app
+- **Comprehensive test suite** — 34 tests covering store, app, components, and TopBar
 - **TypeScript strict mode** — Full type safety
 - **Accessible markup** — Semantic HTML, ARIA labels, keyboard navigation
 
